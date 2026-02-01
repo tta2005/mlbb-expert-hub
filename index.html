@@ -2,26 +2,28 @@
 <html lang="my">
 <head>
     <meta charset="UTF-8">
-    <title>MLBB Expert Wiki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLBB Expert Hub</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f0f1a; color: #e0e0e0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: #1a1a2e; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        h1 { color: #ffd700; text-align: center; font-size: 2.5em; text-transform: uppercase; }
-        #chat-box { height: 500px; overflow-y: auto; border: 2px solid #252545; padding: 20px; margin-bottom: 20px; background: #0a0a12; border-radius: 10px; }
-        input { width: 75%; padding: 15px; border: none; border-radius: 8px; background: #252545; color: white; font-size: 16px; }
-        button { width: 20%; padding: 15px; background: #ffd700; border: none; cursor: pointer; border-radius: 8px; font-weight: bold; color: #000; transition: 0.3s; }
-        button:hover { background: #ffea00; transform: scale(1.05); }
-        .msg { margin-bottom: 20px; padding: 10px; border-radius: 8px; }
-        .user { background: #162447; border-left: 5px solid #4da6ff; }
-        .ai { background: #1b3332; border-left: 5px solid #00ff88; white-space: pre-wrap; }
+        body { font-family: sans-serif; background: #0f0f1a; color: white; display: flex; justify-content: center; padding: 20px; }
+        .container { width: 100%; max-width: 600px; background: #1a1a2e; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1 { color: #ffd700; text-align: center; font-size: 24px; }
+        #chat-box { height: 400px; overflow-y: auto; border: 1px solid #333; padding: 15px; margin-bottom: 15px; background: #0a0a12; border-radius: 8px; }
+        .msg { margin-bottom: 15px; padding: 10px; border-radius: 8px; line-height: 1.5; }
+        .user { background: #162447; border-left: 4px solid #4da6ff; align-self: flex-end; }
+        .ai { background: #1b3332; border-left: 4px solid #00ff88; white-space: pre-wrap; }
+        .input-area { display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px; border-radius: 5px; border: none; background: #252545; color: white; }
+        button { padding: 10px 20px; background: #ffd700; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; color: #000; }
+        button:hover { background: #ffcc00; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>MLBB EXPERT HUB</h1>
+        <h1>MLBB EXPERT AI HUB</h1>
         <div id="chat-box"></div>
-        <div style="display: flex; justify-content: space-between;">
-            <input type="text" id="userInput" placeholder="ဥပမာ - Objective တွေအကြောင်း ရှင်းပြပါ">
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="မေးခွန်းတစ်ခုခု ရိုက်ပါ...">
             <button onclick="askAI()">မေးမယ်</button>
         </div>
     </div>
@@ -29,28 +31,27 @@
     <script type="module">
         import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-        const API_KEY = "AIzaSyDs_hqpi2aXbgJpqN6UIaSoBKzYLT8aqgI"; 
+        const API_KEY = "AIzaSyDs_hqpi2aXbgJpqN6UIaSoBKzYLT8aqgI";
         const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         window.askAI = async () => {
             const input = document.getElementById('userInput');
             const box = document.getElementById('chat-box');
-            if(!input.value) return;
+            if (!input.value.trim()) return;
 
             const userText = input.value;
             box.innerHTML += `<div class="msg user"><b>မင်း:</b> ${userText}</div>`;
             input.value = '';
             box.scrollTop = box.scrollHeight;
 
-            const prompt = `မင်းက MLBB Expert တစ်ယောက်ပါ။ အခုမေးခွန်းကို မြန်မာလို အသေးစိတ်ရှင်းပြပါ: ${userText}`;
-            
             try {
-                const result = await model.generateContent(prompt);
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const result = await model.generateContent(`မင်းက MLBB Expert တစ်ယောက်ပါ။ အောက်ပါမေးခွန်းကို မြန်မာလို အသေးစိတ် ရှင်းပြပေးပါ: ${userText}`);
                 const response = await result.response;
                 box.innerHTML += `<div class="msg ai"><b>AI ဆရာကြီး:</b> ${response.text()}</div>`;
-            } catch (e) {
-                box.innerHTML += `<div class="msg ai" style="color:red;">Error: API Key သို့မဟုတ် Internet စစ်ဆေးပါ</div>`;
+            } catch (error) {
+                box.innerHTML += `<div class="msg ai" style="color: #ff4d4d;">Error: API Key သို့မဟုတ် အင်တာနက်ကို စစ်ဆေးပေးပါ။</div>`;
+                console.error(error);
             }
             box.scrollTop = box.scrollHeight;
         };
