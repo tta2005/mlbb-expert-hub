@@ -3,58 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLBB Expert Hub</title>
+    <title>MLBB Database Myanmar</title>
     <style>
-        body { font-family: sans-serif; background: #0f0f1a; color: white; display: flex; justify-content: center; padding: 20px; }
-        .container { width: 100%; max-width: 600px; background: #1a1a2e; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h1 { color: #ffd700; text-align: center; font-size: 24px; }
-        #chat-box { height: 400px; overflow-y: auto; border: 1px solid #333; padding: 15px; margin-bottom: 15px; background: #0a0a12; border-radius: 8px; }
-        .msg { margin-bottom: 15px; padding: 10px; border-radius: 8px; line-height: 1.5; }
-        .user { background: #162447; border-left: 4px solid #4da6ff; align-self: flex-end; }
-        .ai { background: #1b3332; border-left: 4px solid #00ff88; white-space: pre-wrap; }
-        .input-area { display: flex; gap: 10px; }
-        input { flex: 1; padding: 12px; border-radius: 5px; border: none; background: #252545; color: white; }
-        button { padding: 10px 20px; background: #ffd700; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; color: #000; }
-        button:hover { background: #ffcc00; }
+        :root { --main-bg: #0a0c10; --card-bg: #161b22; --accent: #ffd700; --text: #f0f6fc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--main-bg); color: var(--text); margin: 0; }
+        
+        /* Navigation */
+        nav { background: #010409; padding: 20px; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--accent); text-transform: uppercase; }
+        
+        /* Hero Section */
+        .hero-banner { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://wallpaperaccess.com/full/1523434.jpg'); background-size: cover; padding: 60px 20px; text-align: center; }
+        
+        /* Grid System */
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .section-header { border-left: 4px solid var(--accent); padding-left: 15px; margin: 40px 0 20px; font-size: 22px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        
+        /* Cards */
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; overflow: hidden; transition: 0.3s; cursor: pointer; }
+        .card:hover { transform: scale(1.03); border-color: var(--accent); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+        .card-img { height: 180px; background: #21262d; position: relative; }
+        .card-body { padding: 15px; }
+        .card-title { color: var(--accent); margin: 0; font-size: 20px; }
+        .role-tag { background: #238636; font-size: 12px; padding: 3px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; }
+        
+        /* Item Icons */
+        .items { display: flex; gap: 5px; margin-top: 10px; }
+        .item-slot { width: 35px; height: 35px; background: #30363d; border-radius: 50%; border: 1px solid #8b949e; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>MLBB EXPERT AI HUB</h1>
-        <div id="chat-box"></div>
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="မေးခွန်းတစ်ခုခု ရိုက်ပါ...">
-            <button onclick="askAI()">မေးမယ်</button>
+
+<nav>
+    <div class="logo">MLBB.io MM</div>
+    <div style="color: #8b949e;">Home | Heroes | Items | Builds</div>
+</nav>
+
+<div class="hero-banner">
+    <h1 style="font-size: 3em; margin: 0;">BECOME A PRO PLAYER</h1>
+    <p style="color: var(--accent);">မြန်မာနိုင်ငံသားများအတွက် အပြည့်စုံဆုံး MLBB လမ်းညွှန်</p>
+</div>
+
+<div class="container">
+    <div class="section-header">META HEROES & RECOMMENDED BUILDS</div>
+    <div class="grid">
+        <div class="card">
+            <div class="card-img" style="background: url('https://img.ayobandung.com/crop/0x0:0x0/750x500/webp/photo/2023/04/18/Gusion-3482490522.jpg') center/cover;"></div>
+            <div class="card-body">
+                <div class="card-title">Gusion</div>
+                <span class="badge role-tag">Assassin / Mage</span>
+                <p style="font-size: 14px; color: #8b949e;">Fast hand သမားတွေအတွက် အသင့်တော်ဆုံး Burst damage hero ဖြစ်ပါတယ်။</p>
+                <div class="items">
+                    <div class="item-slot" title="Genius Wand"></div>
+                    <div class="item-slot" title="Holy Crystal"></div>
+                    <div class="item-slot" title="Divine Glaive"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background: url('https://i.pinimg.com/originals/82/3b/6a/823b6a9a08a28795550a259c8787c800.jpg') center/cover;"></div>
+            <div class="card-body">
+                <div class="card-title">Tigreal</div>
+                <span class="badge role-tag" style="background: #da3633;">Tank / Support</span>
+                <p style="font-size: 14px; color: #8b949e;">Flicker + Ulti ကွန်ဘိုကို သေချာသုံးတတ်ရင် ပွဲကို အလှည့်အပြောင်း ဖြစ်စေပါတယ်။</p>
+                <div class="items">
+                    <div class="item-slot"></div><div class="item-slot"></div><div class="item-slot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background: url('https://i.pinimg.com/originals/5c/4b/8d/5c4b8df65541629851722e118999818b.jpg') center/cover;"></div>
+            <div class="card-body">
+                <div class="card-title">Claude</div>
+                <span class="badge role-tag" style="background: #1f6feb;">Marksman</span>
+                <p style="font-size: 14px; color: #8b949e;">Late game မှာ အလွန်ကြောက်ဖို့ကောင်းတဲ့ Core Hero တစ်ယောက်ဖြစ်ပါတယ်။</p>
+                <div class="items">
+                    <div class="item-slot"></div><div class="item-slot"></div><div class="item-slot"></div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <script type="module">
-        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-
-        const API_KEY = "AIzaSyDs_hqpi2aXbgJpqN6UIaSoBKzYLT8aqgI";
-        const genAI = new GoogleGenerativeAI(API_KEY);
-
-        window.askAI = async () => {
-            const input = document.getElementById('userInput');
-            const box = document.getElementById('chat-box');
-            if (!input.value.trim()) return;
-
-            const userText = input.value;
-            box.innerHTML += `<div class="msg user"><b>မင်း:</b> ${userText}</div>`;
-            input.value = '';
-            box.scrollTop = box.scrollHeight;
-
-            try {
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-                const result = await model.generateContent(`မင်းက MLBB Expert တစ်ယောက်ပါ။ အောက်ပါမေးခွန်းကို မြန်မာလို အသေးစိတ် ရှင်းပြပေးပါ: ${userText}`);
-                const response = await result.response;
-                box.innerHTML += `<div class="msg ai"><b>AI ဆရာကြီး:</b> ${response.text()}</div>`;
-            } catch (error) {
-                box.innerHTML += `<div class="msg ai" style="color: #ff4d4d;">Error: API Key သို့မဟုတ် အင်တာနက်ကို စစ်ဆေးပေးပါ။</div>`;
-                console.error(error);
-            }
-            box.scrollTop = box.scrollHeight;
-        };
-    </script>
 </body>
 </html>
