@@ -3,114 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>မြန်မာ့အဆင့်မြင့် မဟာဘုတ်ဗေဒင်</title>
+    <title>အဆင့်မြင့် မြန်မာ့ဗေဒင်တွက်စက်</title>
     <style>
-        :root { --gold: #ffd700; --deep-red: #4a0404; --paper: #f4e4bc; }
-        body { font-family: 'Pyidaungsu', sans-serif; background: #1a1a1a; color: var(--paper); margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 600px; background: var(--deep-red); padding: 25px; border-radius: 15px; border: 4px double var(--gold); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
-        h1 { color: var(--gold); text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-top: 0; }
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; color: var(--gold); font-weight: bold; }
-        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: var(--paper); color: #333; font-size: 16px; }
-        button { width: 100%; padding: 15px; background: var(--gold); color: var(--deep-red); border: none; border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #fff; transform: translateY(-2px); }
-        
-        /* Result Section */
-        #result-area { margin-top: 25px; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 10px; display: none; border: 1px inset var(--gold); }
-        .mahabote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px auto; max-width: 300px; }
-        .cell { background: var(--paper); color: #000; padding: 10px; text-align: center; border-radius: 5px; font-weight: bold; }
-        .active-cell { background: var(--gold); color: var(--deep-red); border: 2px solid #fff; box-shadow: 0 0 10px var(--gold); }
-        .info-text { line-height: 1.8; text-align: justify; }
-        .highlight { color: var(--gold); font-size: 1.2em; font-weight: bold; }
+        :root { --gold: #ffd700; --red: #5c0202; --text: #f4e4bc; }
+        body { font-family: 'Pyidaungsu', sans-serif; background: #121212; color: var(--text); padding: 15px; display: flex; justify-content: center; }
+        .card { width: 100%; max-width: 550px; background: var(--red); padding: 25px; border-radius: 20px; border: 4px double var(--gold); box-shadow: 0 0 40px rgba(0,0,0,0.9); }
+        h1 { color: var(--gold); text-align: center; font-size: 24px; border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+        .input-box { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: var(--gold); font-size: 14px; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: var(--text); color: #222; font-size: 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--gold); color: var(--red); border: none; border-radius: 10px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #fff; transform: scale(1.02); }
+        #output { margin-top: 25px; display: none; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; border: 1px solid var(--gold); }
+        .prediction-title { color: var(--gold); font-weight: bold; font-size: 1.3em; margin-bottom: 10px; border-left: 5px solid var(--gold); padding-left: 10px; }
+        .mahabote-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 250px; margin: 15px auto; }
+        .cell { background: var(--text); color: #000; padding: 10px; text-align: center; font-weight: bold; border-radius: 5px; }
+        .active { background: var(--gold); color: var(--red); border: 2px solid #fff; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🔮 အဆင့်မြင့်မဟာဘုတ်</h1>
+<div class="card">
+    <h1>🔮 အဆင့်မြင့်ဗေဒင်ဟောကိန်း</h1>
     
-    <div class="input-grid">
-        <div style="grid-column: span 2;">
-            <label>မွေးသက္ကရာဇ် (မြန်မာ/အင်္ဂလိပ်)</label>
-            <input type="number" id="year" placeholder="ဥပမာ- ၁၃၆၇ သို့မဟုတ် ၂၀၀၅">
-        </div>
-        <div>
-            <label>မွေးနေ့</label>
-            <select id="day">
-                <option value="0">တနင်္ဂနွေ</option>
-                <option value="1">တနင်္လာ</option>
-                <option value="2">အင်္ဂါ</option>
-                <option value="3">ဗုဒ္ဓဟူး</option>
-                <option value="4">ကြာသပတေး</option>
-                <option value="5">သောကြာ</option>
-                <option value="6">စနေ</option>
+    <div class="input-box">
+        <label>မွေးသက္ကရာဇ် (ခရစ်နှစ်/မြန်မာနှစ်)</label>
+        <input type="number" id="yearInput" placeholder="ဥပမာ- 2005" required>
+    </div>
+
+    <div style="display: flex; gap: 10px;" class="input-box">
+        <div style="flex: 1;">
+            <label>မွေးလ</label>
+            <select id="monthInput">
+                <option value="1">ဇန်နဝါရီ</option><option value="2">ဖေဖော်ဝါရီ</option>
+                <option value="3">မတ်</option><option value="4">ဧပြီ</option>
+                <option value="5">မေ</option><option value="6">ဇွန်</option>
+                <option value="7">ဇူလိုင်</option><option value="8">သြဂုတ်</option>
+                <option value="9">စက်တင်ဘာ</option><option value="10">အောက်တိုဘာ</option>
+                <option value="11">နိုဝင်ဘာ</option><option value="12">ဒီဇင်ဘာ</option>
             </select>
         </div>
-        <div>
-            <label>မွေးချိန် (Morning/Night)</label>
-            <select id="time">
-                <option value="am">နေ့ဘက် (6AM - 6PM)</option>
-                <option value="pm">ညဘက် (6PM - 6AM)</option>
-            </select>
+        <div style="flex: 1;">
+            <label>မွေးရက်</label>
+            <input type="number" id="dateInput" min="1" max="31" value="1">
         </div>
     </div>
 
-    <button onclick="calculateResult()">ဇာတာတွက်ချက်မည်</button>
+    <div class="input-box">
+        <label>မွေးနေ့ (နေ့နံ)</label>
+        <select id="dayInput">
+            <option value="0">တနင်္ဂနွေ</option><option value="1">တနင်္လာ</option>
+            <option value="2">အင်္ဂါ</option><option value="3">ဗုဒ္ဓဟူး</option>
+            <option value="4">ကြာသပတေး</option><option value="5">သောကြာ</option>
+            <option value="6">စနေ</option>
+        </select>
+    </div>
 
-    <div id="result-area">
-        <center><div id="mahabote-table" class="mahabote-grid"></div></center>
-        <div class="info-text">
-            <p id="main-result"></p>
-            <p id="life-prediction"></p>
-        </div>
+    <button onclick="calculateDestiny()">ကံကြမ္မာဟောစမ်းပါ</button>
+
+    <div id="output">
+        <div class="prediction-title" id="posTitle"></div>
+        <div id="gridArea" class="mahabote-box"></div>
+        <p id="generalInfo" style="line-height: 1.6;"></p>
+        <p id="monthlyLuck" style="color: var(--gold); font-style: italic;"></p>
     </div>
 </div>
 
 <script>
-    function calculateResult() {
-        let year = parseInt(document.getElementById('year').value);
-        let day = parseInt(document.getElementById('day').value);
-        const time = document.getElementById('time').value;
+    function calculateDestiny() {
+        let year = parseInt(document.getElementById('yearInput').value);
+        let month = parseInt(document.getElementById('monthInput').value);
+        let day = parseInt(document.getElementById('dayInput').value);
 
-        if (!year) return alert("ခုနှစ်ထည့်ပါဦး သားကြီး");
-        if (year > 1600) year = year - 638; // AD to ME
+        if (!year) return alert("ခုနှစ်ထည့်ပေးပါဦး သားကြီး!");
+        if (year > 1600) year = year - 638; // AD to Myanmar Year
 
         const remainder = year % 7;
         const positions = ["ဘင်္ဂ", "အထွန်း", "ရာဇ", "အဓိပတိ", "မရဏ", "သိုက်", "ပုတိ"];
-        
-        // မဟာဘုတ် ဇယား အစီအစဉ်
-        const chartOrder = [
-            (1+remainder)%7, (4+remainder)%7, (0+remainder)%7,
-            (5+remainder)%7, (2+remainder)%7, (6+remainder)%7,
-            "", (3+remainder)%7, ""
-        ];
-
         const myPosIdx = (day + (7 - remainder)) % 7;
         const myPosition = positions[myPosIdx];
 
         // ဇယားဆွဲခြင်း
-        const grid = document.getElementById('mahabote-table');
-        grid.innerHTML = chartOrder.map((val, idx) => {
-            if (val === "") return "<div></div>";
-            const isMyPos = positions[val] === myPosition;
-            return `<div class="cell ${isMyPos ? 'active-cell' : ''}">${positions[val]}</div>`;
-        }).join('');
+        const chartOrder = [(1+remainder)%7, (4+remainder)%7, (0+remainder)%7, (5+remainder)%7, (2+remainder)%7, (6+remainder)%7, "", (3+remainder)%7, ""];
+        document.getElementById('gridArea').innerHTML = chartOrder.map(val => 
+            val === "" ? "<div></div>" : `<div class="cell ${positions[val] === myPosition ? 'active' : ''}">${positions[val]}</div>`
+        ).join('');
 
-        document.getElementById('result-area').style.display = 'block';
-        document.getElementById('main-result').innerHTML = `သင်သည် <span class="highlight">${myPosition}</span> ဖွားဖြစ်ပါသည်။`;
-
-        let prediction = "";
-        switch(myPosition) {
-            case "အဓိပတိ": prediction = "သင်သည် ခေါင်းဆောင်နိုင်စွမ်းရှိသူဖြစ်သည်။ အများ၏ အားကိုးခြင်းကို ခံရမည်။"; break;
-            case "အထွန်း": prediction = "နာမည်ကျော်ကြားတတ်သည်။ အလုပ်အကိုင်များ အောင်မြင်ထွန်းကားမည်။"; break;
-            case "သိုက်": prediction = "ငွေကြေးဥစ္စာ ဓန ကြွယ်ဝတတ်သူဖြစ်သည်။ စုဆောင်းနိုင်စွမ်းရှိသည်။"; break;
-            case "ရာဇ": prediction = "ဂုဏ်သိက္ခာကြီးမားသူဖြစ်သည်။ လူကြီးမိဘများ၏ ချီးမြှောက်ခြင်းခံရမည်။"; break;
-            case "ဘင်္ဂ": prediction = "ဘဝတွင် အပြောင်းအလဲများမည်။ စွန့်စားရသော အလုပ်များတွင် အောင်မြင်မည်။"; break;
-            case "မရဏ": prediction = "ဇွဲ၊ ဝီရိယ အလွန်ကောင်းသူဖြစ်သည်။ အခက်အခဲများကို ကျော်ဖြတ်နိုင်မည်။"; break;
-            case "ပုတိ": prediction = "အပြောအဆို ကျွမ်းကျင်သူဖြစ်သည်။ အောက်ခြေလူတန်းစားများ၏ အကျိုးကို ဆောင်ရွက်ရမည်။"; break;
-        }
+        // ဟောကိန်းထုတ်ခြင်း
+        document.getElementById('posTitle').innerText = `${myPosition} ဖွား၏ ကံကြမ္မာ`;
         
-        document.getElementById('life-prediction').innerText = prediction + " (မွေးချိန် " + (time === 'am' ? 'နေ့' : 'ည') + " ဖြစ်သည့်အတွက် အကျိုးပေး ပိုမိုထူးခြားနိုင်ပါသည်။)";
+        let info = "";
+        if(myPosition === "အဓိပတိ") info = "သင်သည် ဦးဆောင်နိုင်စွမ်းရှိသူဖြစ်သည်။ အနုပညာ သို့မဟုတ် စီးပွားရေးတွင် ထိပ်တန်းသို့ ရောက်မည်။";
+        else if(myPosition === "အထွန်း") info = "နာမည်ကျော်ကြားတတ်သည်။ လူများ၏ ချစ်ခင်မှုကို ရရှိမည်။";
+        else if(myPosition === "သိုက်") info = "ငွေကြေးဥစ္စာ စုဆောင်းနိုင်သူဖြစ်သည်။ အမွေအနှစ် ရတတ်သည်။";
+        else if(myPosition === "ရာဇ") info = "ဂုဏ်သိက္ခာရှိသူဖြစ်သည်။ အကြီးအကဲများ၏ စောင့်ရှောက်မှု ခံရမည်။";
+        else info = "ဇွဲရှိလျှင် အောင်မြင်မည့်သူဖြစ်သည်။ စိတ်ရှည်သည်းခံတတ်ရန် လိုအပ်သည်။";
+
+        document.getElementById('generalInfo').innerText = info;
+        document.getElementById('monthlyLuck').innerText = `မွေးလ (${month}) အရ ယခုကာလသည် သင့်အတွက် အခွင့်အလမ်းသစ်များ ပေါ်ပေါက်မည့် အချိန်ဖြစ်ပါသည်။`;
+        document.getElementById('output').style.display = 'block';
     }
 </script>
 
