@@ -3,90 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLBB Database Myanmar</title>
+    <title>MLBB Database MM</title>
     <style>
-        :root { --main-bg: #0a0c10; --card-bg: #161b22; --accent: #ffd700; --text: #f0f6fc; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--main-bg); color: var(--text); margin: 0; }
-        
-        /* Navigation */
-        nav { background: #010409; padding: 20px; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 24px; font-weight: bold; color: var(--accent); text-transform: uppercase; }
-        
-        /* Hero Section */
-        .hero-banner { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://wallpaperaccess.com/full/1523434.jpg'); background-size: cover; padding: 60px 20px; text-align: center; }
-        
-        /* Grid System */
+        :root { --main-bg: #0d1117; --card-bg: #161b22; --accent: #ffd700; --text: #f0f6fc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--main-bg); color: var(--text); margin: 0; padding-bottom: 50px; }
+        nav { background: #010409; padding: 20px; border-bottom: 2px solid var(--accent); text-align: center; position: sticky; top: 0; z-index: 100; }
         .container { max-width: 1200px; margin: auto; padding: 20px; }
-        .section-header { border-left: 4px solid var(--accent); padding-left: 15px; margin: 40px 0 20px; font-size: 22px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        
-        /* Cards */
-        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; overflow: hidden; transition: 0.3s; cursor: pointer; }
-        .card:hover { transform: scale(1.03); border-color: var(--accent); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
-        .card-img { height: 180px; background: #21262d; position: relative; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; overflow: hidden; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .card-img { height: 160px; background-size: cover; background-position: center; }
         .card-body { padding: 15px; }
-        .card-title { color: var(--accent); margin: 0; font-size: 20px; }
-        .role-tag { background: #238636; font-size: 12px; padding: 3px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; }
-        
-        /* Item Icons */
-        .items { display: flex; gap: 5px; margin-top: 10px; }
-        .item-slot { width: 35px; height: 35px; background: #30363d; border-radius: 50%; border: 1px solid #8b949e; }
+        .card-title { color: var(--accent); font-size: 20px; margin: 0; }
+        .role { font-size: 12px; background: #238636; padding: 2px 8px; border-radius: 4px; display: inline-block; margin: 5px 0; }
+        .desc { font-size: 14px; color: #8b949e; line-height: 1.4; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">MLBB.io MM</div>
-    <div style="color: #8b949e;">Home | Heroes | Items | Builds</div>
-</nav>
-
-<div class="hero-banner">
-    <h1 style="font-size: 3em; margin: 0;">BECOME A PRO PLAYER</h1>
-    <p style="color: var(--accent);">မြန်မာနိုင်ငံသားများအတွက် အပြည့်စုံဆုံး MLBB လမ်းညွှန်</p>
-</div>
+<nav><h2 style="margin:0; color:var(--accent);">MLBB.IO MYANMAR</h2></nav>
 
 <div class="container">
-    <div class="section-header">META HEROES & RECOMMENDED BUILDS</div>
-    <div class="grid">
-        <div class="card">
-            <div class="card-img" style="background: url('https://img.ayobandung.com/crop/0x0:0x0/750x500/webp/photo/2023/04/18/Gusion-3482490522.jpg') center/cover;"></div>
-            <div class="card-body">
-                <div class="card-title">Gusion</div>
-                <span class="badge role-tag">Assassin / Mage</span>
-                <p style="font-size: 14px; color: #8b949e;">Fast hand သမားတွေအတွက် အသင့်တော်ဆုံး Burst damage hero ဖြစ်ပါတယ်။</p>
-                <div class="items">
-                    <div class="item-slot" title="Genius Wand"></div>
-                    <div class="item-slot" title="Holy Crystal"></div>
-                    <div class="item-slot" title="Divine Glaive"></div>
-                </div>
-            </div>
+    <h2 style="border-left: 4px solid var(--accent); padding-left: 10px;">META HEROES</h2>
+    <div class="grid" id="hero-grid">
         </div>
-
-        <div class="card">
-            <div class="card-img" style="background: url('https://i.pinimg.com/originals/82/3b/6a/823b6a9a08a28795550a259c8787c800.jpg') center/cover;"></div>
-            <div class="card-body">
-                <div class="card-title">Tigreal</div>
-                <span class="badge role-tag" style="background: #da3633;">Tank / Support</span>
-                <p style="font-size: 14px; color: #8b949e;">Flicker + Ulti ကွန်ဘိုကို သေချာသုံးတတ်ရင် ပွဲကို အလှည့်အပြောင်း ဖြစ်စေပါတယ်။</p>
-                <div class="items">
-                    <div class="item-slot"></div><div class="item-slot"></div><div class="item-slot"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-img" style="background: url('https://i.pinimg.com/originals/5c/4b/8d/5c4b8df65541629851722e118999818b.jpg') center/cover;"></div>
-            <div class="card-body">
-                <div class="card-title">Claude</div>
-                <span class="badge role-tag" style="background: #1f6feb;">Marksman</span>
-                <p style="font-size: 14px; color: #8b949e;">Late game မှာ အလွန်ကြောက်ဖို့ကောင်းတဲ့ Core Hero တစ်ယောက်ဖြစ်ပါတယ်။</p>
-                <div class="items">
-                    <div class="item-slot"></div><div class="item-slot"></div><div class="item-slot"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
+<script>
+    // မင်းထည့်ချင်တဲ့ Hero တွေကို ဒီအောက်က list ထဲမှာပဲ စာသားလေးတွေ လိုက်ဖြည့်လိုက်ရုံပဲ
+    const heroData = [
+        { name: "Gusion", role: "Assassin", desc: "Fast hand သမားတွေအတွက် အကောင်းဆုံး hero ပါ။", img: "https://img.ayobandung.com/crop/0x0:0x0/750x500/webp/photo/2023/04/18/Gusion-3482490522.jpg" },
+        { name: "Tigreal", role: "Tank", desc: "CC ပေးနိုင်စွမ်း အကောင်းဆုံး Tank ဖြစ်ပါတယ်။", img: "https://i.pinimg.com/originals/82/3b/6a/823b6a9a08a28795550a259c8787c800.jpg" },
+        { name: "Claude", role: "Marksman", desc: "Attack speed မြန်မြန်နဲ့ damage အပြင်းစားပေးနိုင်ပါတယ်။", img: "https://i.pinimg.com/originals/5c/4b/8d/5c4b8df65541629851722e118999818b.jpg" },
+        { name: "Fanny", role: "Assassin", desc: "Cable ကျွမ်းကျင်ဖို့ လိုအပ်တဲ့ အခက်ခဲဆုံး hero ပါ။", img: "https://wallpapercave.com/wp/wp4314457.jpg" }
+    ];
+
+    const grid = document.getElementById('hero-grid');
+    heroData.forEach(hero => {
+        grid.innerHTML += `
+            <div class="card">
+                <div class="card-img" style="background-image: url('${hero.img}')"></div>
+                <div class="card-body">
+                    <div class="card-title">${hero.name}</div>
+                    <span class="role">${hero.role}</span>
+                    <p class="desc">${hero.desc}</p>
+                </div>
+            </div>
+        `;
+    });
+</script>
 
 </body>
 </html>
