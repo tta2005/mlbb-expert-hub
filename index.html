@@ -3,94 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI ဗေဒင်ဆရာကြီး - Chat Version</title>
+    <title>AI အဆင့်မြင့် ဗေဒင်ဆရာကြီး</title>
     <style>
-        :root { --gold: #ffd700; --deep-red: #4a0404; --paper: #f4e4bc; }
-        body { font-family: 'Pyidaungsu', sans-serif; background: #121212; color: var(--paper); padding: 15px; }
-        .app-container { width: 100%; max-width: 600px; background: var(--deep-red); padding: 25px; border-radius: 20px; border: 4px double var(--gold); margin: auto; }
-        h1 { color: var(--gold); text-align: center; text-shadow: 2px 2px #000; }
-        .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: var(--paper); color: #222; font-size: 15px; box-sizing: border-box; }
-        textarea { height: 80px; resize: none; font-family: inherit; }
-        button { width: 100%; padding: 15px; background: var(--gold); color: var(--deep-red); border: none; border-radius: 10px; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 10px; }
+        :root { --gold: #ffd700; --dark: #2c0101; --cream: #fff5e1; }
+        body { font-family: 'Pyidaungsu', sans-serif; background: #1a1a1a; color: var(--cream); padding: 20px; }
+        .app-card { max-width: 600px; margin: auto; background: var(--dark); border: 3px solid var(--gold); border-radius: 20px; padding: 25px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        h2 { text-align: center; color: var(--gold); margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: var(--gold); font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: #fdfdfd; color: #333; box-sizing: border-box; }
+        textarea { height: 120px; font-size: 16px; line-height: 1.6; }
+        button { width: 100%; padding: 15px; background: var(--gold); color: var(--dark); border: none; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #fff; transform: translateY(-2px); }
         
-        #chatDisplay { margin-top: 25px; display: none; }
-        .chat-bubble { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border-left: 5px solid var(--gold); line-height: 1.8; margin-bottom: 20px; }
-        .mahabote-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 210px; margin: 15px auto; }
-        .cell { background: var(--paper); color: #000; padding: 10px; text-align: center; font-weight: bold; border-radius: 4px; font-size: 14px; }
-        .active { background: var(--gold); color: var(--deep-red); border: 2px solid #fff; box-shadow: 0 0 10px var(--gold); }
+        #output { margin-top: 30px; display: none; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border-left: 5px solid var(--gold); }
+        .result-text { line-height: 2; white-space: pre-line; font-size: 17px; }
+        .grid-view { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 180px; margin: 15px auto; }
+        .cell { background: var(--cream); color: #000; padding: 8px; text-align: center; border-radius: 4px; font-weight: bold; font-size: 12px; }
+        .active-cell { background: var(--gold); color: #800000; box-shadow: 0 0 10px var(--gold); }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <h1>🔮 AI ဗေဒင် Chat</h1>
+<div class="app-card">
+    <h2>🔮 AI အဆင့်မြင့် ဗေဒင်</h2>
     
-    <div class="input-grid">
-        <input type="text" id="name" placeholder="သင့်အမည်">
-        <input type="number" id="year" placeholder="မွေးနှစ် (2005)">
-        <select id="day">
-            <option value="0">တနင်္ဂနွေ</option><option value="1">တနင်္လာ</option><option value="2">အင်္ဂါ</option>
-            <option value="3">ဗုဒ္ဓဟူး</option><option value="4">ကြာသပတေး</option><option value="5">သောကြာ</option><option value="6">စနေ</option>
-        </select>
-        <input type="time" id="time">
+    <div class="form-group">
+        <label>အမည်</label>
+        <input type="text" id="userName" placeholder="ဥပမာ - မောင်လှ">
     </div>
 
-    <label style="color: var(--gold); font-weight: bold;">ဆရာကြီးကို ဘာမေးချင်လဲ? (ရိုက်ထည့်ပါ)</label>
-    <textarea id="userQuestion" placeholder="ဥပမာ- ကျွန်တော် အလုပ်အဆင်ပြေပါ့မလား? / နိုင်ငံခြားသွားရမလား?"></textarea>
+    <div style="display: flex; gap: 10px;" class="form-group">
+        <div style="flex: 1;">
+            <label>မွေးသက္ကရာဇ် (ခရစ်နှစ်/မြန်မာနှစ်)</label>
+            <input type="number" id="birthYear" placeholder="1386 သို့မဟုတ် 2024">
+        </div>
+        <div style="flex: 1;">
+            <label>မွေးနေ့</label>
+            <select id="birthDay">
+                <option value="0">တနင်္ဂနွေ</option><option value="1">တနင်္လာ</option><option value="2">အင်္ဂါ</option>
+                <option value="3">ဗုဒ္ဓဟူး</option><option value="4">ကြာသပတေး</option><option value="5">သောကြာ</option><option value="6">စနေ</option>
+            </select>
+        </div>
+    </div>
 
-    <button onclick="aiChat()">ဆရာကြီးကို မေးမြန်းမယ်</button>
+    <div class="form-group">
+        <label>မေးမြန်းလိုသည့် အကြောင်းအရာ</label>
+        <textarea id="userQuestion" placeholder="ဥပမာ- ကျွန်တော် ငယ်ဘဝက ဘယ်လိုလဲ? အခု အလုပ်သစ်လုပ်ဖို့ ကြံနေတာ အဆင်ပြေမလား? ယတြာလေးလည်း သိချင်ပါတယ်။"></textarea>
+    </div>
 
-    <div id="chatDisplay">
-        <center><div id="mGrid" class="mahabote-box"></div></center>
-        <div class="chat-bubble" id="aiReply"></div>
+    <button onclick="aiFortuneTeller()">ကံကြမ္မာကို တွက်ချက်မည်</button>
+
+    <div id="output">
+        <div id="mGrid" class="grid-view"></div>
+        <div id="resultContent" class="result-text"></div>
     </div>
 </div>
 
 <script>
-    function aiChat() {
-        const name = document.getElementById('name').value || "သားကြီး";
-        let year = parseInt(document.getElementById('year').value);
-        const day = parseInt(document.getElementById('day').value);
-        const time = document.getElementById('time').value;
-        const q = document.getElementById('userQuestion').value;
+function aiFortuneTeller() {
+    const name = document.getElementById('userName').value || "အမည်မသိသူ";
+    let year = parseInt(document.getElementById('birthYear').value);
+    const day = parseInt(document.getElementById('birthDay').value);
+    const question = document.getElementById('userQuestion').value;
 
-        if (!year || !time || !q) return alert("အချက်အလက်တွေ အကုန်ဖြည့်ပါဦး!");
+    if (!year || !question) return alert("အချက်အလက်များကို ဖြည့်စွက်ပါ");
 
-        if (year > 1600) year -= 638;
-        const remainder = year % 7;
-        const hour = parseInt(time.split(':')[0]);
-        const positions = ["ဘင်္ဂ", "အထွန်း", "ရာဇ", "အဓိပတိ", "မရဏ", "သိုက်", "ပုတိ"];
-        
-        let bDay = day;
-        if (day === 3 && hour >= 18) bDay = 7; 
-        const myIdx = (bDay + (7 - remainder)) % 7;
-        const myPos = positions[myIdx];
+    // Mahabote Calculation
+    if (year > 1600) year -= 638;
+    const remainder = year % 7;
+    const houses = ["ဘင်္ဂ", "အထွန်း", "ရာဇ", "အဓိပတိ", "မရဏ", "သိုက်", "ပုတိ"];
+    const myHouseIdx = (day + (7 - remainder)) % 7;
+    const myHouse = houses[myHouseIdx];
 
-        const order = [(1+remainder)%7, (4+remainder)%7, (0+remainder)%7, (5+remainder)%7, (2+remainder)%7, (6+remainder)%7, "", (3+remainder)%7, ""];
-        document.getElementById('mGrid').innerHTML = order.map(val => 
-            val === "" ? "<div></div>" : `<div class="cell ${positions[val] === myPos ? 'active' : ''}">${positions[val]}</div>`
-        ).join('');
+    // Response Generation Logic
+    let finalResponse = `မင်္ဂလာပါ ${name}။ မင်းရဲ့ မဟာဘုတ်ဇာတာခွင်ကို ဆရာကြီး အသေးစိတ် ကြည့်ရှုပေးပါ့မယ်။\n\n`;
 
-        let reply = `<b>ဆရာကြီး ဖြေမယ်... ${name}</b><br><br>`;
-        reply += `မင်းရဲ့ ဇာတာက <b>${myPos}</b> ဌာနမှာ ရှိနေတယ်။ မင်းမေးတဲ့ "<i>${q}</i>" နဲ့ ပတ်သက်ပြီး ဟောရရင်...<br><br>`;
-
-        const query = q.toLowerCase();
-        if (query.includes("အလုပ်") || query.includes("စီးပွား")) {
-            reply += `မင်းရဲ့ ${myPos} ဓာတ်အရ အလုပ်မှာ အတိုက်အခံရှိပေမဲ့ ဇွဲရှိရင် အောင်မြင်မယ်။ မွေးချိန်က ${hour} နာရီဖြစ်လို့ မွန်းလွဲပိုင်းတွေမှာ ပိုကံကောင်းတတ်တယ်။`;
-        } else if (query.includes("နိုင်ငံခြား") || query.includes("ခရီး")) {
-            reply += `နိုင်ငံခြားကံကတော့ ${myPos === 'ဘင်္ဂ' || myPos === 'အထွန်း' ? 'အရမ်းအားကောင်းတယ်' : 'နည်းနည်းတော့ ကြိုးစားရဦးမယ်'}။ ဒီနှစ်ထဲမှာ အခွင့်အရေးရှိတယ်။`;
-        } else if (query.includes("ချစ်သူ") || query.includes("အချစ်") || query.includes("အိမ်ထောင်")) {
-            reply += `အချစ်ရေးမှာတော့ မင်းက နည်းနည်း ဇီဇာကြောင်တတ်သူ ဖြစ်နေတယ်။ မင်းရဲ့ မွေးချိန်အရ စိတ်ရှည်ပေးဖို့ လိုမယ်။`;
-        } else if (query.includes("ကျန်းမာ")) {
-            reply += `ကျန်းမာရေးကတော့ လတ်တလော အညံ့မရှိပါဘူး။ ဒါပေမယ့် အစားအသောက် ဆင်ခြင်ပါ။`;
+    // 1. ငယ်ဘဝအကြောင်း (Childhood Analysis)
+    if (question.includes("ငယ်") || question.includes("အတိတ်")) {
+        let childhood = "";
+        if (myHouse === "ဘင်္ဂ" || myHouse === "မရဏ") {
+            childhood = "ငယ်ဘဝမှာ ကျန်းမာရေး အနည်းငယ် ချို့တဲ့တာ ဒါမှမဟုတ် မိသားစုနဲ့ ခွဲခွာရတာမျိုး ရှိတတ်ပါတယ်။ စိတ်ပင်ပန်းမှု အချို့ ကြုံခဲ့ရပေမယ့် အဲ့ဒါက မင်းကို ရင့်ကျက်စေခဲ့တယ်။";
         } else {
-            reply += `မင်းမေးတာကို ဆရာကြီး ခြုံငုံကြည့်ရရင် ${myPos} ဖွားဖြစ်တဲ့အတွက် အခက်အခဲဆိုတာ ခဏပဲ။ မင်းရဲ့ နာမည်ဓာတ်နဲ့အညီ ယုံကြည်ချက်ရှိရှိ ရှေ့ဆက်ပါ။`;
+            childhood = "ငယ်ဘဝမှာ လူချစ်လူခင် ပေါများပြီး ကံကောင်းမှု အချို့ရှိခဲ့ပါတယ်။ ဒါပေမယ့် စိတ်ဆန္ဒ စောတတ်တဲ့ အကျင့်ကြောင့် အမှားအယွင်း အချို့တော့ ရှိခဲ့နိုင်ပါတယ်။";
         }
-
-        document.getElementById('aiReply').innerHTML = reply;
-        document.getElementById('chatDisplay').style.display = 'block';
+        finalResponse += `🟢 **ငယ်ဘဝအခြေအနေ:**\n ${childhood}\n\n`;
     }
+
+    // 2. အလုပ်အကိုင် (Career Advice)
+    if (question.includes("အလုပ်") || question.includes("လုပ်သင့်")) {
+        let career = "";
+        if (myHouse === "အထွန်း" || myHouse === "ရာဇ" || myHouse === "အဓိပတိ") {
+            career = "မင်းကြံစည်နေတဲ့ အလုပ်က မင်းရဲ့ ကံဇာတာနဲ့ အရမ်းကို ကိုက်ညီမှုရှိတယ်။ အရှိန်အဟုန်နဲ့ လုပ်ကိုင်ဖို့ အချိန်ကောင်းဖြစ်ပြီး အကျိုးအမြတ် အောင်မြင်မှု ရဖို့ ၈၀% သေချာပါတယ်။";
+        } else {
+            career = "လက်ရှိမှာ အပြောင်းအလဲထက် ရှိတာကို ထိန်းသိမ်းတာ ပိုကောင်းပါလိမ့်မယ်။ အလုပ်သစ်လုပ်မယ်ဆိုရင်တောင် လူယုံမမှားဖို့နဲ့ အစီအစဉ်ကို အသေအချာ ပြန်စစ်ဖို့ လိုအပ်ပါတယ်။";
+        }
+        finalResponse += `🔵 **အလုပ်အကိုင် အကြံပြုချက်:**\n ${career}\n\n`;
+    }
+
+    // 3. ယတြာ (Remedy)
+    if (question.includes("ယတြာ") || question.includes("ကံညံ့")) {
+        const yatraList = [
+            "အုန်းညွန့် ၆ ညွန့်ကို အိမ်က ဘုရားမှာ ကပ်လှူပြီး ကံပွင့်ပါစေလို့ ဆုတောင်းပါ။",
+            "တနင်္လာနေ့မှာ နွမ်းပါးသူကို အချိုရည် လှူဒါန်းပေးပါ။",
+            "အင်္ဂါနေ့မှာ ဘုရားဖူးသွားပြီး သပြေပန်း လှူပါ။",
+            "ဗုဒ္ဓဟူးနေ့မှာ တိရစ္ဆာန်တွေကို အစာကျွေးပါ။",
+            "ကြာသပတေးနေ့မှာ ဆရာတော်ကြီးတွေကို ဆွမ်းကပ်လှူပါ။",
+            "သောကြာနေ့မှာ ပန်းရောင် အဝတ်အစား ဝတ်ပြီး ဒါနပြုပါ။",
+            "စနေနေ့မှာ ထီး ဒါမှမဟုတ် ဖိနပ် လှူဒါန်းပေးပါ။"
+        ];
+        finalResponse += `🟡 **ယတြာ:**\n မင်းအတွက် အကောင်းဆုံး ယတြာကတော့ - ${yatraList[day]}\n\n`;
+    }
+
+    // Fallback if question is too general
+    if (finalResponse.length < 150) {
+        finalResponse += `ခြုံငုံကြည့်ရရင် မင်းက ${myHouse} ဌာနမှာ ဖွားမြင်သူဖြစ်တဲ့အတွက် မင်းရဲ့ ဘဝမှာ ကြိုးစားအားထုတ်မှုကပဲ မင်းရဲ့ ကံကြမ္မာကို ပြောင်းလဲပေးနိုင်မှာပါ။ ဆရာကြီးကတော့ မင်းကို ယုံကြည်ပါတယ်။`;
+    }
+
+    // Grid Display
+    const order = [(1+remainder)%7, (4+remainder)%7, (0+remainder)%7, (5+remainder)%7, (2+remainder)%7, (6+remainder)%7, "", (3+remainder)%7, ""];
+    document.getElementById('mGrid').innerHTML = order.map(v => 
+        v==="" ? `<div></div>` : `<div class="cell ${houses[v]===myHouse?'active-cell':''}">${houses[v]}</div>`
+    ).join('');
+
+    document.getElementById('resultContent').innerText = finalResponse;
+    document.getElementById('output').style.display = 'block';
+}
 </script>
 
 </body>
