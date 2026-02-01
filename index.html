@@ -3,54 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLBB Database MM</title>
+    <title>MLBB Expert Hub Myanmar</title>
     <style>
-        :root { --main-bg: #0d1117; --card-bg: #161b22; --accent: #ffd700; --text: #f0f6fc; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--main-bg); color: var(--text); margin: 0; padding-bottom: 50px; }
-        nav { background: #010409; padding: 20px; border-bottom: 2px solid var(--accent); text-align: center; position: sticky; top: 0; z-index: 100; }
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; overflow: hidden; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card-img { height: 160px; background-size: cover; background-position: center; }
-        .card-body { padding: 15px; }
-        .card-title { color: var(--accent); font-size: 20px; margin: 0; }
-        .role { font-size: 12px; background: #238636; padding: 2px 8px; border-radius: 4px; display: inline-block; margin: 5px 0; }
-        .desc { font-size: 14px; color: #8b949e; line-height: 1.4; margin: 10px 0; }
+        :root { --bg: #0b0e14; --card: #1c2128; --gold: #ffd700; --text: #adbac7; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+        
+        /* Header & Nav */
+        header { background: #161b22; padding: 20px; text-align: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .search-box { margin-top: 15px; padding: 10px; width: 80%; max-width: 400px; border-radius: 20px; border: 1px solid #444; background: #0d1117; color: white; outline: none; }
+
+        /* Container & Grid */
+        .container { max-width: 1100px; margin: auto; padding: 20px; }
+        .hero-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+
+        /* Professional Hero Card */
+        .hero-card { background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid #30363d; transition: 0.3s; position: relative; cursor: pointer; }
+        .hero-card:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 5px 15px rgba(255,215,0,0.1); }
+        .hero-img { height: 280px; background-size: cover; background-position: center; filter: grayscale(20%); transition: 0.3s; }
+        .hero-card:hover .hero-img { filter: grayscale(0%); }
+        .hero-info { padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); position: absolute; bottom: 0; width: 100%; box-sizing: border-box; }
+        .hero-name { color: var(--gold); font-size: 20px; font-weight: bold; margin: 0; }
+        .hero-role { font-size: 12px; color: #fff; background: rgba(35, 134, 54, 0.8); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 5px; }
+
+        .section-title { border-left: 4px solid var(--gold); padding-left: 10px; margin-bottom: 25px; color: #fff; }
     </style>
 </head>
 <body>
 
-<nav><h2 style="margin:0; color:var(--accent);">MLBB.IO MYANMAR</h2></nav>
+<header>
+    <div style="font-size: 24px; font-weight: bold; color: var(--gold);">MLBB.IO MM</div>
+    <input type="text" class="search-box" placeholder="Hero နာမည်ဖြင့် ရှာဖွေပါ...">
+</header>
 
 <div class="container">
-    <h2 style="border-left: 4px solid var(--accent); padding-left: 10px;">META HEROES</h2>
-    <div class="grid" id="hero-grid">
+    <h2 class="section-title">ALL HEROES</h2>
+    <div class="hero-grid" id="heroGrid">
         </div>
 </div>
 
 <script>
-    // မင်းထည့်ချင်တဲ့ Hero တွေကို ဒီအောက်က list ထဲမှာပဲ စာသားလေးတွေ လိုက်ဖြည့်လိုက်ရုံပဲ
-    const heroData = [
-        { name: "Gusion", role: "Assassin", desc: "Fast hand သမားတွေအတွက် အကောင်းဆုံး hero ပါ။", img: "https://img.ayobandung.com/crop/0x0:0x0/750x500/webp/photo/2023/04/18/Gusion-3482490522.jpg" },
-        { name: "Tigreal", role: "Tank", desc: "CC ပေးနိုင်စွမ်း အကောင်းဆုံး Tank ဖြစ်ပါတယ်။", img: "https://i.pinimg.com/originals/82/3b/6a/823b6a9a08a28795550a259c8787c800.jpg" },
-        { name: "Claude", role: "Marksman", desc: "Attack speed မြန်မြန်နဲ့ damage အပြင်းစားပေးနိုင်ပါတယ်။", img: "https://i.pinimg.com/originals/5c/4b/8d/5c4b8df65541629851722e118999818b.jpg" },
-        { name: "Fanny", role: "Assassin", desc: "Cable ကျွမ်းကျင်ဖို့ လိုအပ်တဲ့ အခက်ခဲဆုံး hero ပါ။", img: "https://wallpapercave.com/wp/wp4314457.jpg" }
+    // Hero စာရင်းကို ဒီမှာပဲ အလွယ်တကူ ထည့်လို့ရတယ်
+    const heroes = [
+        { name: "Gusion", role: "Assassin", img: "https://img.ayobandung.com/crop/0x0:0x0/750x500/webp/photo/2023/04/18/Gusion-3482490522.jpg" },
+        { name: "Tigreal", role: "Tank", img: "https://i.pinimg.com/originals/82/3b/6a/823b6a9a08a28795550a259c8787c800.jpg" },
+        { name: "Claude", role: "Marksman", img: "https://i.pinimg.com/originals/5c/4b/8d/5c4b8df65541629851722e118999818b.jpg" },
+        { name: "Fanny", role: "Assassin", img: "https://wallpapercave.com/wp/wp4314457.jpg" },
+        { name: "Lancelot", role: "Assassin", img: "https://wallpaperaccess.com/full/1523456.jpg" },
+        { name: "Angela", role: "Support", img: "https://wallpapercan.com/download/1920x1080/0677a641/mlbb-angela-skin.jpg" }
     ];
 
-    const grid = document.getElementById('hero-grid');
-    heroData.forEach(hero => {
-        grid.innerHTML += `
-            <div class="card">
-                <div class="card-img" style="background-image: url('${hero.img}')"></div>
-                <div class="card-body">
-                    <div class="card-title">${hero.name}</div>
-                    <span class="role">${hero.role}</span>
-                    <p class="desc">${hero.desc}</p>
+    const grid = document.getElementById('heroGrid');
+    
+    function displayHeroes(list) {
+        grid.innerHTML = list.map(hero => `
+            <div class="hero-card">
+                <div class="hero-img" style="background-image: url('${hero.img}')"></div>
+                <div class="hero-info">
+                    <div class="hero-name">${hero.name}</div>
+                    <span class="hero-role">${hero.role}</span>
                 </div>
             </div>
-        `;
-    });
+        `).join('');
+    }
+
+    displayHeroes(heroes);
 </script>
 
 </body>
