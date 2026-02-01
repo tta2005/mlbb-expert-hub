@@ -3,39 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>မြန်မာ့အဆင့်မြင့် AI ဗေဒင်ဆရာကြီး</title>
+    <title>AI ဗေဒင်ဆရာကြီး - Advanced Version</title>
     <style>
         :root { --gold: #ffd700; --deep-red: #4a0404; --paper: #f4e4bc; }
-        body { font-family: 'Pyidaungsu', sans-serif; background: #121212; color: var(--paper); padding: 15px; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 650px; background: var(--deep-red); padding: 30px; border-radius: 25px; border: 5px double var(--gold); box-shadow: 0 0 50px rgba(0,0,0,1); }
-        h1 { color: var(--gold); text-align: center; font-size: 28px; text-shadow: 2px 2px #000; margin-bottom: 25px; }
-        .input-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
-        label { color: var(--gold); font-size: 13px; font-weight: bold; margin-bottom: 5px; display: block; }
-        input, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold); background: var(--paper); color: #222; font-size: 16px; box-sizing: border-box; }
-        .chat-box { margin-top: 25px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px inset var(--gold); min-height: 100px; }
-        .ai-message { border-left: 4px solid var(--gold); padding-left: 15px; line-height: 1.8; animation: fadeIn 0.8s; }
-        button { width: 100%; padding: 18px; background: var(--gold); color: var(--deep-red); border: none; border-radius: 12px; font-weight: bold; font-size: 20px; cursor: pointer; transition: 0.4s; margin-top: 20px; box-shadow: 0 4px 15px rgba(255,215,0,0.3); }
-        button:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,215,0,0.5); }
-        .mahabote-ui { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 280px; margin: 20px auto; }
-        .cell { background: var(--paper); color: #000; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; font-size: 18px; transition: 0.3s; }
-        .active-cell { background: var(--gold); color: var(--deep-red); transform: scale(1.1); border: 3px solid #fff; box-shadow: 0 0 15px var(--gold); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { font-family: 'Pyidaungsu', sans-serif; background: #121212; color: var(--paper); padding: 20px; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 700px; background: var(--deep-red); padding: 30px; border-radius: 20px; border: 4px double var(--gold); box-shadow: 0 0 50px rgba(0,0,0,1); }
+        h1 { color: var(--gold); text-align: center; font-size: 26px; text-shadow: 2px 2px #000; }
+        .input-section { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 15px; }
+        label { color: var(--gold); font-size: 14px; font-weight: bold; margin-bottom: 5px; display: block; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: var(--paper); color: #222; font-size: 16px; box-sizing: border-box; }
+        .full-width { grid-column: span 2; }
+        button { width: 100%; padding: 18px; background: var(--gold); color: var(--deep-red); border: none; border-radius: 10px; font-weight: bold; font-size: 20px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #fff; transform: translateY(-3px); }
+        
+        #result-area { margin-top: 30px; display: none; border-top: 2px solid var(--gold); padding-top: 20px; }
+        .mahabote-ui { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 300px; margin: 20px auto; }
+        .cell { background: var(--paper); color: #000; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; border: 2px solid transparent; }
+        .active { background: var(--gold); color: var(--deep-red); border: 2px solid #fff; transform: scale(1.1); box-shadow: 0 0 15px var(--gold); }
+        .ai-chat { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 15px; border-left: 5px solid var(--gold); line-height: 1.8; text-align: justify; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <h1>✨ AI ဗေဒင်ဆရာကြီး (အထူးဗားရှင်း)</h1>
+    <h1>🔮 AI ဗေဒင်ဆရာကြီး (အစုံတွက်စက်)</h1>
     
-    <div class="input-group">
-        <div style="grid-column: span 2;">
+    <div class="input-section">
+        <div class="full-width">
+            <label>သင့်အမည် (မြန်မာလို)</label>
+            <input type="text" id="userName" placeholder="ဥပမာ - မောင်မောင်">
+        </div>
+        <div class="full-width">
             <label>မွေးသက္ကရာဇ် (ခရစ်နှစ်/မြန်မာနှစ်)</label>
-            <input type="number" id="year" placeholder="ဥပမာ- 2005" required>
+            <input type="number" id="year" placeholder="ဥပမာ - 2005">
         </div>
         <div><label>မွေးလ</label><input type="number" id="month" placeholder="1-12"></div>
         <div><label>မွေးရက်</label><input type="number" id="date" placeholder="1-31"></div>
         <div>
-            <label>မွေးနေ့</label>
+            <label>မွေးနေ့ (နေ့နံ)</label>
             <select id="day">
                 <option value="0">တနင်္ဂနွေ</option><option value="1">တနင်္လာ</option>
                 <option value="2">အင်္ဂါ</option><option value="3">ဗုဒ္ဓဟူး</option>
@@ -43,69 +48,68 @@
                 <option value="6">စနေ</option>
             </select>
         </div>
-        <div><label>မွေးချိန် (တိကျစွာထည့်ပါ)</label><input type="time" id="time"></div>
+        <div><label>မွေးချိန် (တိကျစွာ)</label><input type="time" id="time"></div>
     </div>
 
-    <label>ဆရာကြီးထံသို့ မေးမြန်းလိုသောအချက်</label>
-    <select id="intent">
-        <option value="general">ဘာကြောင့် ကျွန်ုပ်ဘဝက အခုလိုဖြစ်နေရတာလဲ?</option>
-        <option value="wealth">ဘယ်အချိန်မှာ ငွေကြေးကံ ပွင့်လာမလဲ?</option>
-        <option value="love">ကျွန်ုပ်ရဲ့ ဖူးစာရှင်က ဘယ်လိုလူစားမျိုးလဲ?</option>
-        <option value="advice">ကံကောင်းဖို့ ဘယ်လိုယတြာတွေ လုပ်သင့်သလဲ?</option>
+    <label>သိချင်သော ကဏ္ဍကို မေးမြန်းပါ</label>
+    <select id="topic">
+        <option value="name">နာမည်နဲ့ နေ့နံ ကိုက်/မကိုက် စစ်ဆေးမယ်</option>
+        <option value="life">ကျွန်ုပ်ဘဝရဲ့ အားသာချက်/အားနည်းချက်က ဘာလဲ?</option>
+        <option value="finance">စီးပွားရေးနဲ့ ငွေကြေးကံ အခြေအနေ</option>
+        <option value="danger">အထူးသတိထားရမယ့် အန္တရာယ်နဲ့ ယတြာ</option>
     </select>
 
-    <button onclick="calculateAI()">ကံကြမ္မာကို အသေးစိတ်ဟောကြားမည်</button>
+    <button onclick="consultAI()">ဆရာကြီးထံမှ အဖြေတောင်းမည်</button>
 
-    <div id="result-display" style="display:none;">
-        <div id="grid-box" class="mahabote-ui"></div>
-        <div class="chat-box">
-            <div id="ai-response" class="ai-message"></div>
-        </div>
+    <div id="result-area">
+        <div id="mahaboteGrid" class="mahabote-ui"></div>
+        <div class="ai-chat" id="aiResponse"></div>
     </div>
 </div>
 
 <script>
-    function calculateAI() {
+    function consultAI() {
+        const name = document.getElementById('userName').value;
         let year = parseInt(document.getElementById('year').value);
-        let day = parseInt(document.getElementById('day').value);
-        let time = document.getElementById('time').value;
-        let intent = document.getElementById('intent').value;
+        const day = parseInt(document.getElementById('day').value);
+        const time = document.getElementById('time').value;
+        const topic = document.getElementById('topic').value;
 
-        if (!year || !time) return alert("အချိန်နဲ့ နှစ်ကို တိကျစွာ ထည့်ပါဦး သားကြီး!");
+        if (!year || !time || !name) return alert("အမည်၊ အချိန်နဲ့ နှစ်ကို အပြည့်အစုံထည့်ပါ သားကြီး!");
 
         if (year > 1600) year -= 638;
         const remainder = year % 7;
         const hour = parseInt(time.split(':')[0]);
         const positions = ["ဘင်္ဂ", "အထွန်း", "ရာဇ", "အဓိပတိ", "မရဏ", "သိုက်", "ပုတိ"];
         
-        let actualDay = day;
-        if (day === 3 && hour >= 18) { actualDay = 7; } // ရာဟု Logic
+        let birthDay = day;
+        if (day === 3 && hour >= 18) birthDay = 7; // ရာဟု
 
-        const myIdx = (actualDay + (7 - remainder)) % 7;
+        const myIdx = (birthDay + (7 - remainder)) % 7;
         const myPos = positions[myIdx];
 
-        // ဇယားဆွဲခြင်း
+        // Draw Mahabote
         const chartOrder = [(1+remainder)%7, (4+remainder)%7, (0+remainder)%7, (5+remainder)%7, (2+remainder)%7, (6+remainder)%7, "", (3+remainder)%7, ""];
-        document.getElementById('grid-box').innerHTML = chartOrder.map(val => 
-            val === "" ? "<div></div>" : `<div class="cell ${positions[val] === myPos ? 'active-cell' : ''}">${positions[val]}</div>`
+        document.getElementById('mahaboteGrid').innerHTML = chartOrder.map(val => 
+            val === "" ? "<div></div>" : `<div class="cell ${positions[val] === myPos ? 'active' : ''}">${positions[val]}</div>`
         ).join('');
 
-        // AI Logic based on time and intent
-        let response = `<b>ဆရာကြီး ဟောကြားချက်-</b><br>`;
-        response += `မင်းဟာ မွေးချိန် <b>${time}</b> မှာ ${myPos} ဌာနမှာ မွေးဖွားလာသူ ဖြစ်တယ်။ `;
+        // Human-like AI Response Logic
+        let response = `<b>အိုကေ သားကြီး ${name}...</b> <br><br>`;
+        response += `မင်းဟာ မွေးနှစ်အကြွင်း <b>(${remainder})</b> ဖြစ်ပြီး <b>${myPos}</b> ဌာနမှာ ဖွားမြင်တဲ့သူ ဖြစ်တယ်။ မွေးချိန်က <b>${time}</b> ဆိုတော့ မင်းရဲ့ ဇာတာက တော်တော်လေး စိတ်ဝင်စားဖို့ကောင်းတယ်။ <br><br>`;
 
-        if (intent === 'wealth') {
-            response += `မင်းရဲ့ ဌာနအရ ငွေကြေးကံဟာ အသက် (၂၅) ကျော်မှ သိသိသာသာ ပွင့်လိမ့်မယ်။ အခုအချိန်မှာ အိတ်ပေါက်နဲ့ ဖားကောက်သလို ဖြစ်နေရတာက မင်းရဲ့ ${myPos} ဓာတ်ကြောင့်ပဲ။`;
-        } else if (intent === 'love') {
-            response += `မွေးချိန် ${hour} နာရီမှာ မွေးတာကြောင့် မင်းရဲ့ ဖူးစာရှင်ဟာ စကားပြောချိုသာပြီး မင်းအပေါ် အရမ်းဂရုစိုက်မယ့်သူ ဖြစ်လိမ့်မယ်။`;
-        } else if (intent === 'advice') {
-            response += `မင်းရဲ့ ${myPos} ဌာနက အားနည်းနေတယ်။ ဒါကို ပြုပြင်ဖို့အတွက် အဝါရောင်ဝတ်ဆင်ပြီး ဘုရားမှာ ပန်းဝါ (၇) ပွင့် ကပ်လှူပေးပါ။`;
+        if (topic === 'name') {
+            response += `<b>နာမည်ဆန်းစစ်ချက်:</b> မင်းရဲ့ နာမည် "${name}" နဲ့ မွေးနေ့နံကို တွက်ချက်ကြည့်ရသလောက်... မင်းနာမည်ရဲ့ အစစာလုံးဟာ မင်းရဲ့ ဇာတာအရ ဓာတ်မြှင့်ပေးတဲ့ အက္ခရာ ဖြစ်နေတာ တွေ့ရတယ်။ ဒါဟာ ဘဝအတွက် အထောက်အကူ ဖြစ်စေပါတယ်။`;
+        } else if (topic === 'life') {
+            response += `<b>ဘဝကံကြမ္မာ:</b> ${myPos} ဖွားဖြစ်တဲ့အတွက် မင်းဟာ စိတ်ဓာတ်ခိုင်မာသူ ဖြစ်တယ်။ ဒါပေမယ့် မွေးချိန်အရ စိတ်မြန်လက်မြန် ဖြစ်တတ်တာကိုတော့ သတိထားပါ။ အသက် (၂၈) နောက်ပိုင်းမှာ အခြေအနေတွေ သိသိသာသာ ပြောင်းလဲလာမယ်။`;
+        } else if (topic === 'finance') {
+            response += `<b>စီးပွားရေး:</b> ${myPos} ဌာနက စီးပွားရေးမှာ အတက်အကျ များတတ်တဲ့ သဘောရှိတယ်။ ငွေဝင်ရင်လည်း တစ်လုံးတစ်ခဲတည်း ဝင်တတ်သလို၊ ထွက်ရင်လည်း အဖတ်မတင်ဖြစ်တတ်တယ်။ အနောက်အရပ်ကို မျက်နှာမူပြီး အလုပ်လုပ်တာက မင်းအတွက် အကျိုးပေးမယ်။`;
         } else {
-            response += `ဘဝမှာ အခက်အခဲတွေ ရှိနေတာက မင်းရဲ့ ဇွဲကို စမ်းသပ်နေတာပါ။ ${myPos} ဖွားတွေဟာ နောက်ဆုံးမှာ အမြဲ အနိုင်ရလေ့ရှိပါတယ်။`;
+            response += `<b>ယတြာနှင့် သတိပေးချက်:</b> လတ်တလောမှာ အတိုက်အခံ နည်းနည်းရှိနိုင်တယ်။ ဒါကို ပြေပျောက်ဖို့ မွေးနေ့မနက်မှာ ဘုရားမှာ အောင်သပြေ (၉) ညွန့် လှူပေးပါ။ အထူးသဖြင့် အပြာရောင်ကို အဆောင်အနေနဲ့ သုံးပါ။`;
         }
 
-        document.getElementById('ai-response').innerHTML = response;
-        document.getElementById('result-display').style.display = 'block';
+        document.getElementById('aiResponse').innerHTML = response;
+        document.getElementById('result-area').style.display = 'block';
     }
 </script>
 
