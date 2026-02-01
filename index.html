@@ -3,101 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>အဆင့်မြင့် လက်ဆန်းဗေဒင် (အချိန်အသေးစိတ်)</title>
+    <title>မြန်မာ့အဆင့်မြင့် AI ဗေဒင်ဆရာကြီး</title>
     <style>
-        :root { --gold: #ffd700; --red: #5c0202; --text: #f4e4bc; }
-        body { font-family: 'Pyidaungsu', sans-serif; background: #121212; color: var(--text); padding: 15px; display: flex; justify-content: center; }
-        .card { width: 100%; max-width: 550px; background: var(--red); padding: 25px; border-radius: 20px; border: 4px double var(--gold); box-shadow: 0 0 40px rgba(0,0,0,0.9); }
-        h1 { color: var(--gold); text-align: center; font-size: 24px; border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
-        .input-box { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: var(--gold); font-size: 14px; }
-        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: var(--text); color: #222; font-size: 16px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: var(--gold); color: var(--red); border: none; border-radius: 10px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #fff; transform: scale(1.02); }
-        #output { margin-top: 25px; display: none; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; border: 1px solid var(--gold); }
-        .highlight { color: var(--gold); font-weight: bold; font-size: 1.2em; }
+        :root { --gold: #ffd700; --deep-red: #4a0404; --paper: #f4e4bc; }
+        body { font-family: 'Pyidaungsu', sans-serif; background: #121212; color: var(--paper); padding: 15px; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 650px; background: var(--deep-red); padding: 30px; border-radius: 25px; border: 5px double var(--gold); box-shadow: 0 0 50px rgba(0,0,0,1); }
+        h1 { color: var(--gold); text-align: center; font-size: 28px; text-shadow: 2px 2px #000; margin-bottom: 25px; }
+        .input-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        label { color: var(--gold); font-size: 13px; font-weight: bold; margin-bottom: 5px; display: block; }
+        input, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold); background: var(--paper); color: #222; font-size: 16px; box-sizing: border-box; }
+        .chat-box { margin-top: 25px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px inset var(--gold); min-height: 100px; }
+        .ai-message { border-left: 4px solid var(--gold); padding-left: 15px; line-height: 1.8; animation: fadeIn 0.8s; }
+        button { width: 100%; padding: 18px; background: var(--gold); color: var(--deep-red); border: none; border-radius: 12px; font-weight: bold; font-size: 20px; cursor: pointer; transition: 0.4s; margin-top: 20px; box-shadow: 0 4px 15px rgba(255,215,0,0.3); }
+        button:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,215,0,0.5); }
+        .mahabote-ui { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 280px; margin: 20px auto; }
+        .cell { background: var(--paper); color: #000; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; font-size: 18px; transition: 0.3s; }
+        .active-cell { background: var(--gold); color: var(--deep-red); transform: scale(1.1); border: 3px solid #fff; box-shadow: 0 0 15px var(--gold); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h1>🔮 အဆင့်မြင့် ဗေဒင်ဆရာကြီး</h1>
+<div class="app-container">
+    <h1>✨ AI ဗေဒင်ဆရာကြီး (အထူးဗားရှင်း)</h1>
     
-    <div class="input-box">
-        <label>မွေးသက္ကရာဇ် (2005 စသဖြင့်)</label>
-        <input type="number" id="yearInput" placeholder="ဥပမာ- 2005" required>
-    </div>
-
-    <div style="display: flex; gap: 10px;" class="input-box">
-        <div style="flex: 1;"><label>မွေးလ</label><input type="number" id="monthInput" min="1" max="12" value="1"></div>
-        <div style="flex: 1;"><label>မွေးရက်</label><input type="number" id="dateInput" min="1" max="31" value="1"></div>
-    </div>
-
-    <div style="display: flex; gap: 10px;" class="input-box">
-        <div style="flex: 1;">
+    <div class="input-group">
+        <div style="grid-column: span 2;">
+            <label>မွေးသက္ကရာဇ် (ခရစ်နှစ်/မြန်မာနှစ်)</label>
+            <input type="number" id="year" placeholder="ဥပမာ- 2005" required>
+        </div>
+        <div><label>မွေးလ</label><input type="number" id="month" placeholder="1-12"></div>
+        <div><label>မွေးရက်</label><input type="number" id="date" placeholder="1-31"></div>
+        <div>
             <label>မွေးနေ့</label>
-            <select id="dayInput">
-                <option value="0">တနင်္ဂနွေ</option><option value="1">တနင်္လာ</option><option value="2">အင်္ဂါ</option>
-                <option value="3">ဗုဒ္ဓဟူး</option><option value="4">ကြာသပတေး</option><option value="5">သောကြာ</option><option value="6">စနေ</option>
+            <select id="day">
+                <option value="0">တနင်္ဂနွေ</option><option value="1">တနင်္လာ</option>
+                <option value="2">အင်္ဂါ</option><option value="3">ဗုဒ္ဓဟူး</option>
+                <option value="4">ကြာသပတေး</option><option value="5">သောကြာ</option>
+                <option value="6">စနေ</option>
             </select>
         </div>
-        <div style="flex: 1;">
-            <label>မွေးချိန် (တိကျစွာထည့်ပါ)</label>
-            <input type="time" id="timeInput" value="12:00">
+        <div><label>မွေးချိန် (တိကျစွာထည့်ပါ)</label><input type="time" id="time"></div>
+    </div>
+
+    <label>ဆရာကြီးထံသို့ မေးမြန်းလိုသောအချက်</label>
+    <select id="intent">
+        <option value="general">ဘာကြောင့် ကျွန်ုပ်ဘဝက အခုလိုဖြစ်နေရတာလဲ?</option>
+        <option value="wealth">ဘယ်အချိန်မှာ ငွေကြေးကံ ပွင့်လာမလဲ?</option>
+        <option value="love">ကျွန်ုပ်ရဲ့ ဖူးစာရှင်က ဘယ်လိုလူစားမျိုးလဲ?</option>
+        <option value="advice">ကံကောင်းဖို့ ဘယ်လိုယတြာတွေ လုပ်သင့်သလဲ?</option>
+    </select>
+
+    <button onclick="calculateAI()">ကံကြမ္မာကို အသေးစိတ်ဟောကြားမည်</button>
+
+    <div id="result-display" style="display:none;">
+        <div id="grid-box" class="mahabote-ui"></div>
+        <div class="chat-box">
+            <div id="ai-response" class="ai-message"></div>
         </div>
-    </div>
-
-    <div class="input-box">
-        <label>သိချင်သော ကဏ္ဍ</label>
-        <select id="topicInput">
-            <option value="wealth">စီးပွားရေးနှင့် ငွေကြေး</option>
-            <option value="love">အချစ်ရေးနှင့် အိမ်ထောင်ရေး</option>
-            <option value="health">ကျန်းမာရေး</option>
-        </select>
-    </div>
-
-    <button onclick="calculateDetailedFortune()">ကံကြမ္မာကို အသေးစိတ်တွက်မည်</button>
-
-    <div id="output">
-        <div id="resTitle" class="highlight" style="border-bottom: 1px solid var(--gold); margin-bottom: 10px; padding-bottom: 5px;"></div>
-        <p id="resDesc" style="line-height: 1.6; text-align: justify;"></p>
     </div>
 </div>
 
 <script>
-    function calculateDetailedFortune() {
-        let year = parseInt(document.getElementById('yearInput').value);
-        let day = parseInt(document.getElementById('dayInput').value);
-        let time = document.getElementById('timeInput').value;
-        let topic = document.getElementById('topicInput').value;
+    function calculateAI() {
+        let year = parseInt(document.getElementById('year').value);
+        let day = parseInt(document.getElementById('day').value);
+        let time = document.getElementById('time').value;
+        let intent = document.getElementById('intent').value;
 
-        if (!year) return alert("ခုနှစ်ထည့်ပါဦး သားကြီး!");
-        
-        // ညနေ ၆ နာရီကျော်ရင် ဗုဒ္ဓဟူးနေ့ကနေ ရာဟု ပြောင်းတဲ့ Logic
-        let hour = parseInt(time.split(':')[0]);
-        let isRahu = (day === 3 && hour >= 18);
-        
+        if (!year || !time) return alert("အချိန်နဲ့ နှစ်ကို တိကျစွာ ထည့်ပါဦး သားကြီး!");
+
         if (year > 1600) year -= 638;
         const remainder = year % 7;
+        const hour = parseInt(time.split(':')[0]);
         const positions = ["ဘင်္ဂ", "အထွန်း", "ရာဇ", "အဓိပတိ", "မရဏ", "သိုက်", "ပုတိ"];
-        const myIdx = (day + (7 - remainder)) % 7;
+        
+        let actualDay = day;
+        if (day === 3 && hour >= 18) { actualDay = 7; } // ရာဟု Logic
+
+        const myIdx = (actualDay + (7 - remainder)) % 7;
         const myPos = positions[myIdx];
 
-        document.getElementById('resTitle').innerText = `${myPos} ဖွား (မွေးချိန် - ${time})`;
+        // ဇယားဆွဲခြင်း
+        const chartOrder = [(1+remainder)%7, (4+remainder)%7, (0+remainder)%7, (5+remainder)%7, (2+remainder)%7, (6+remainder)%7, "", (3+remainder)%7, ""];
+        document.getElementById('grid-box').innerHTML = chartOrder.map(val => 
+            val === "" ? "<div></div>" : `<div class="cell ${positions[val] === myPos ? 'active-cell' : ''}">${positions[val]}</div>`
+        ).join('');
 
-        let resultText = "";
-        if (isRahu) {
-            resultText = "သင်သည် ဗုဒ္ဓဟူးနေ့ ညနေခင်း (ရာဟု) ဖွားဖြစ်သည့်အတွက် ထူးခြားသော ဉာဏ်ရည်ရှိသူဖြစ်သည်။ ";
+        // AI Logic based on time and intent
+        let response = `<b>ဆရာကြီး ဟောကြားချက်-</b><br>`;
+        response += `မင်းဟာ မွေးချိန် <b>${time}</b> မှာ ${myPos} ဌာနမှာ မွေးဖွားလာသူ ဖြစ်တယ်။ `;
+
+        if (intent === 'wealth') {
+            response += `မင်းရဲ့ ဌာနအရ ငွေကြေးကံဟာ အသက် (၂၅) ကျော်မှ သိသိသာသာ ပွင့်လိမ့်မယ်။ အခုအချိန်မှာ အိတ်ပေါက်နဲ့ ဖားကောက်သလို ဖြစ်နေရတာက မင်းရဲ့ ${myPos} ဓာတ်ကြောင့်ပဲ။`;
+        } else if (intent === 'love') {
+            response += `မွေးချိန် ${hour} နာရီမှာ မွေးတာကြောင့် မင်းရဲ့ ဖူးစာရှင်ဟာ စကားပြောချိုသာပြီး မင်းအပေါ် အရမ်းဂရုစိုက်မယ့်သူ ဖြစ်လိမ့်မယ်။`;
+        } else if (intent === 'advice') {
+            response += `မင်းရဲ့ ${myPos} ဌာနက အားနည်းနေတယ်။ ဒါကို ပြုပြင်ဖို့အတွက် အဝါရောင်ဝတ်ဆင်ပြီး ဘုရားမှာ ပန်းဝါ (၇) ပွင့် ကပ်လှူပေးပါ။`;
+        } else {
+            response += `ဘဝမှာ အခက်အခဲတွေ ရှိနေတာက မင်းရဲ့ ဇွဲကို စမ်းသပ်နေတာပါ။ ${myPos} ဖွားတွေဟာ နောက်ဆုံးမှာ အမြဲ အနိုင်ရလေ့ရှိပါတယ်။`;
         }
 
-        const predictions = {
-            wealth: "ယခုအချိန်တွင် ငွေကြေးကံ ကောင်းမွန်နေသော်လည်း အသုံးအစွဲဆင်ခြင်ပါ။ စပ်တူအလုပ်များ သတိထားပါ။",
-            love: "အချစ်ရေးတွင် နားလည်မှု ပေးနိုင်သူကို တွေ့ရမည်။ အိမ်ထောင်ရေးတွင် စိတ်ရှည်သည်းခံရန် လိုအပ်သည်။",
-            health: "အစာအိမ်နှင့် အာရုံကြောပိုင်း ဂရုစိုက်ပါ။ ဘာသာရေး အလုပ်များ ပိုလုပ်ပေးပါ။"
-        };
-
-        document.getElementById('resDesc').innerHTML = resultText + predictions[topic];
-        document.getElementById('output').style.display = 'block';
+        document.getElementById('ai-response').innerHTML = response;
+        document.getElementById('result-display').style.display = 'block';
     }
 </script>
 
