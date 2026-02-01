@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <title>MLBB Expert Wiki</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f0f1a; color: #e0e0e0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #1a1a2e; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        h1 { color: #ffd700; text-align: center; font-size: 2.5em; text-transform: uppercase; }
+        #chat-box { height: 500px; overflow-y: auto; border: 2px solid #252545; padding: 20px; margin-bottom: 20px; background: #0a0a12; border-radius: 10px; }
+        input { width: 75%; padding: 15px; border: none; border-radius: 8px; background: #252545; color: white; font-size: 16px; }
+        button { width: 20%; padding: 15px; background: #ffd700; border: none; cursor: pointer; border-radius: 8px; font-weight: bold; color: #000; transition: 0.3s; }
+        button:hover { background: #ffea00; transform: scale(1.05); }
+        .msg { margin-bottom: 20px; padding: 10px; border-radius: 8px; }
+        .user { background: #162447; border-left: 5px solid #4da6ff; }
+        .ai { background: #1b3332; border-left: 5px solid #00ff88; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MLBB EXPERT HUB</h1>
+        <div id="chat-box"></div>
+        <div style="display: flex; justify-content: space-between;">
+            <input type="text" id="userInput" placeholder="ဥပမာ - Objective တွေအကြောင်း ရှင်းပြပါ">
+            <button onclick="askAI()">မေးမယ်</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+        const API_KEY = "AIzaSyDs_hqpi2aXbgJpqN6UIaSoBKzYLT8aqgI"; 
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        window.askAI = async () => {
+            const input = document.getElementById('userInput');
+            const box = document.getElementById('chat-box');
+            if(!input.value) return;
+
+            const userText = input.value;
+            box.innerHTML += `<div class="msg user"><b>မင်း:</b> ${userText}</div>`;
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+
+            const prompt = `မင်းက MLBB Expert တစ်ယောက်ပါ။ အခုမေးခွန်းကို မြန်မာလို အသေးစိတ်ရှင်းပြပါ: ${userText}`;
+            
+            try {
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                box.innerHTML += `<div class="msg ai"><b>AI ဆရာကြီး:</b> ${response.text()}</div>`;
+            } catch (e) {
+                box.innerHTML += `<div class="msg ai" style="color:red;">Error: API Key သို့မဟုတ် Internet စစ်ဆေးပါ</div>`;
+            }
+            box.scrollTop = box.scrollHeight;
+        };
+    </script>
+</body>
+</html>
